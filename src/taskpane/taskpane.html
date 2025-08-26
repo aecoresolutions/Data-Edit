@@ -2,52 +2,58 @@
 <html>
 
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Excel Firebase Add-in</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Excel Firebase Add-in</title>
 
-  <!-- Office JavaScript API -->
-  <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <!-- Office JavaScript API -->
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
 
-  <!-- Firebase compat SDKs (must come BEFORE taskpane.js) -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <!-- Firebase compat SDKs (must come BEFORE taskpane.js) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
-  <link rel="stylesheet"
-    href="https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/office-ui-fabric-core/11.1.0/css/fabric.min.css" />
+    <link rel="stylesheet"
+        href="https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/office-ui-fabric-core/11.1.0/css/fabric.min.css" />
 
-  <link href="taskpane.css" rel="stylesheet" type="text/css" />
+    <link href="taskpane.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body class="ms-Fabric">
-  <div id="app-body" style="display: flex; flex-direction: column; padding: 20px; gap: 12px; max-width: 400px;">
-    <h2>Firebase Data Entry</h2>
+    <div id="app-body" style="display: flex; flex-direction: column; padding: 20px; gap: 12px; max-width: 400px;">
+        <h2>Firebase Data Entry</h2>
 
-    <label>Serial:</label>
-    <input id="serial" type="number" placeholder="Enter serial number" />
+        <label>Serial:</label>
+        <input id="serial" type="number" placeholder="Enter serial number" />
 
-    <label>Section No.:</label>
-    <input id="sectionNo" type="number" placeholder="Enter section number" />
-    
-    <label>System Default / Keywords:</label>
-    <input id="keywords" type="text" placeholder="Enter keywords" />
+        <label>Section No.:</label>
+        <input id="sectionNo" type="number" placeholder="Enter section number" />
 
-    <label>Sections:</label>
-    <input id="sections" type="text" placeholder="Enter section details" />
+        <label>System Default / Keywords:</label>
+        <input id="keywords" type="text" placeholder="Enter keywords" />
 
-    <label>Equipment / Subsections:</label>
-    <input id="equipment" type="text" placeholder="Enter equipment" />
+        <label>Sections:</label>
+        <input id="sections" type="text" placeholder="Enter section details" />
 
-    <button id="btnAdd" class="ms-Button ms-Button--primary" style="margin-top: 15px;">
-      <span class="ms-Button-label">Add Data</span>
+        <label>Equipment / Subsections:</label>
+        <input id="equipment" type="text" placeholder="Enter equipment" />
+
+        <button id="btnAdd" class="ms-Button ms-Button--primary" style="margin-top: 15px;">
+            <span class="ms-Button-label">Add Data</span>
+        </button>
+
+        <div id="output" style="margin-top: 20px; font-size: 14px; color: #16da4b;"></div>
+    </div>
+    <button id="btnLoadJson" class="ms-Button" style="margin-top: 10px; background:#0078d7; color:white;">
+        <span class="ms-Button-label">Load JSON from GitHub</span>
     </button>
 
     <div id="output" style="margin-top: 20px; font-size: 14px; color: #16da4b;"></div>
-  </div>
+    </div>
 
-  <!-- 🚨 IMPORTANT: no "type=module" here -->
-  <script src="taskpane.js"></script>
+    <!-- 🚨 IMPORTANT: no "type=module" here -->
+    <script src="taskpane.js"></script>
 </body>
 
 </html>
