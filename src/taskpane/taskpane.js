@@ -27,11 +27,26 @@ if (!firebase.apps.length) {
 }
 const db = firebase.firestore();
 
+
+async function loadJsonToLocalStorage() {
+  try {
+    const url = "https://aecoresolutions.github.io/Data-Edit/Specs%20Chklis-first%2050.json";
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Failed to fetch JSON");
+
+    const data = await response.json();
+    localStorage.setItem("specsData", JSON.stringify(data));
+
+    console.log("✅ JSON data saved in localStorage as 'specsData'");
+  } catch (error) {
+    console.error("❌ Error loading JSON:", error);
+  }
+}
+
+
 Office.onReady((info) => {
   if (info.host === Office.HostType.Excel) {
     document.getElementById("btnAdd").onclick = addDataToFirebase;
-
-    document.getElementById("btnLoadJson").onclick = loadJsonFromGithub;
   }
 });
 
@@ -81,42 +96,4 @@ async function addDataToFirebase() {
     document.getElementById("output").innerText = "❌ Error adding data: " + err.message;
     console.error(err);
   }
-}
-async function loadJsonFromGithub() {
-  await Excel.run(async (context) => {
-    const sheet = context.workbook.worksheets.getActiveWorksheet();
-    const url = "https://raw.githubusercontent.com/aecoresolutions/Data-Edit/main/Specs%20Chklis-first%2050.json";
-
-    try {
-      const response = await fetch(url);
-      if (!response.ok) throw new Error(`Fetch failed: ${response.statusText}`);
-      const json = await response.json();
-
-      if (!Array.isArray(json)) {
-        sheet.getRange("A1").values = [["Unexpected JSON format"]];
-        await context.sync();
-        return;
-      }
-
-      // Headers → reorder if needed
-      const headers = ["Serial", "Section No.", "System Default / Keywords", "Sections", "Equippment / Subsections"];
-      const data = json.map(item => headers.map(h => item[h] ?? ""));
-
-      // Insert table
-      const startCell = sheet.getRange("A1");
-      const tableRange = startCell.getResizedRange(json.length, headers.length);
-      tableRange.values = [headers, ...data];
-
-      const table = sheet.tables.add(tableRange, true /* hasHeaders */);
-      table.name = "ImportedJsonData";
-
-      // Auto fit
-      tableRange.getEntireColumn().format.autofitColumns();
-
-      await context.sync();
-    } catch (err) {
-      sheet.getRange("A1").values = [[`Error: ${err.message}`]];
-      await context.sync();
-    }
-  });
 }
