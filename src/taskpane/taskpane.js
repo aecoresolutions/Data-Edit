@@ -47,6 +47,8 @@ async function loadJsonToLocalStorage() {
 Office.onReady((info) => {
   if (info.host === Office.HostType.Excel) {
     document.getElementById("btnAdd").onclick = addDataToFirebase;
+
+    loadJsonToLocalStorage();
   }
 });
 
